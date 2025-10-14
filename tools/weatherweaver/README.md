@@ -52,3 +52,6 @@ MIT
 ## Funding
 
 <https://github.com/open-webui>
+
+---
+[Repository Link](https://github.com/PureGrain/openwebui-stuff)

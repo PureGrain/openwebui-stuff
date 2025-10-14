@@ -12,6 +12,7 @@ Central hub for PureGrain's OpenWebUI tools, models, functions, and prompt asset
 ## Finished Tools
 
 - [TimeWeaver](tools/timeweaver/README.md): Timezone-aware date/time tool with DST intelligence and easy import via JSON
+- [WeatherWeaver](tools/weatherweaver/README.md): Enhanced weather tool with comprehensive data from Open-Meteo (free, no API key required)
 
 ## How to Use
 

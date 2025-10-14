@@ -8,3 +8,6 @@ This folder contains specialized tools for OpenWebUI.
 - `timeweaver-export.json`: JSON export for easy import into OpenWebUI via the Tools panel.
 
 Add new tools as separate subfolders or scripts, and document their usage here.
+
+---
+[Repository Link](https://github.com/PureGrain/openwebui-stuff)
