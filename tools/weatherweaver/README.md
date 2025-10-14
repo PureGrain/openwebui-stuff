@@ -1,9 +1,8 @@
-
 # WeatherWeaver
 
 Comprehensive, keyless weather tool for OpenWebUI. Get current conditions and forecasts for any city—no API key required.
 
-**Repo:** [WeatherWeaver on GitHub](https://github.com/PureGrain/my-openwebui/tree/main/tools/weatherweaver)
+**Repo:** [WeatherWeaver on GitHub](https://github.com/PureGrain/openwebui-stuff/tree/main/tools/weatherweaver)
 
 ## Features
 

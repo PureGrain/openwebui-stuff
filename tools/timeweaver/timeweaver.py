@@ -2,7 +2,7 @@
 title: TimeWeaver - Timezone & Date/Time Tool
 author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
-repo_url: https://github.com/PureGrain/my-openwebui
+repo_url: https://github.com/PureGrain/openwebui-stuff
 funding_url: https://github.com/open-webui
 version: 1.1.0
 license: MIT

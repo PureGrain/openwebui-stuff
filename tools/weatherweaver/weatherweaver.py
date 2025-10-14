@@ -2,7 +2,7 @@
 title: WeatherWeaver - Enhanced Weather Tool
 author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
-repo_url: https://github.com/PureGrain/my-openwebui/tree/main/tools/weatherweaver
+repo_url: https://github.com/PureGrain/openwebui-stuff
 funding_url: https://github.com/open-webui
 version: 1.0.4
 license: MIT
