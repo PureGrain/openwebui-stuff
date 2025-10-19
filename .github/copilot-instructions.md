@@ -1,37 +1,43 @@
-# Copilot Instructions for openwebui-stuff
+# Copilot Instructions for ProxmoxWeaver
 
-This guide helps AI coding agents work productively in the `openwebui-stuff` codebase. It summarizes key architecture, workflows, and conventions unique to this project.
+This guide helps AI coding agents work productively in the `proxmoxweaver` tool codebase. It summarizes key architecture, workflows, and conventions unique to this project.
 
 ## Project Overview
-- **Purpose:** Central hub for OpenWebUI tools, models, and functions.
+- **Purpose:** OpenWebUI tool for managing and monitoring Proxmox clusters, VMs, containers, nodes, storage, backups, users, permissions, and more.
 - **Structure:**
-  - `functions/` — (currently empty) Intended for utility or core logic modules.
-  - `models/` — (currently empty) Intended for ML models or data abstractions.
-  - `prompts/` — (currently empty) Intended for prompt templates or prompt engineering assets.
-  - `tools/` — Contains `timeweaver.py`, likely a specialized tool or script.
+  - `test_weaver.py` — Main tool file, all features implemented as top-level methods in the `Tools` class.
+  - `README.md` — Documentation for features, usage, troubleshooting, and examples.
 
 ## Key Patterns & Conventions
-- **Modularity:** Each top-level directory is for a distinct concern (functions, models, prompts, tools).
-- **Naming:** Files and folders use lowercase and descriptive names.
-- **Extensibility:** Empty folders signal planned expansion; add new modules following the existing structure.
+- **Modularity:** All features are implemented as top-level methods in the `Tools` class.
+- **Naming:** Methods are descriptive and match their functionality (e.g., `list_cluster_vms_and_containers_grouped`).
+- **Extensibility:** Add new features as new top-level methods in `Tools`.
 
 ## Developer Workflows
-- **No build/test scripts detected.**
-  - If adding build or test workflows, place scripts in the project root or a dedicated `scripts/` folder.
-- **Debugging:** For Python tools (e.g., `tools/timeweaver.py`), run directly with `python tools/timeweaver.py`.
+- **Authentication:** Configure API credentials in the `Valves` class in `test_weaver.py`.
+- **Debugging:** Run methods directly via OpenWebUI or Python for testing.
+- **Error Handling:** All API calls use `_make_request`, which handles errors and returns structured output.
 
-## Integration Points
-- **External dependencies:** Not detected in the current structure. Add requirements to a `requirements.txt` in the root if needed.
-- **Cross-component communication:** Organize shared logic in `functions/`, models in `models/`, and prompts in `prompts/` for clarity.
+## Features
+- VM & Container Visibility
+- Node & Cluster Health
+- Storage & Backup
+- Task & Event Monitoring
+- Snapshots & Templates
+- User & Permission Overview
+- Network & Console
+- Help & Troubleshooting
 
-## Example: Adding a New Tool
-1. Place new scripts in `tools/`.
-2. Use clear, descriptive filenames (e.g., `data_cleaner.py`).
-3. Document usage in the README or in a dedicated docstring.
+## Troubleshooting
+- Missing IPs: Ensure QEMU guest agent is running for VMs, containers are started.
+- Templates/stopped containers: No IPs assigned.
+- Authentication errors: Check API token permissions.
+- SSL errors: Set VERIFY_SSL to False for self-signed certs.
+- Output errors: Check API endpoint and connectivity.
 
-## References
-- See `README.md` for a brief project description.
-- Use this file to update AI agent instructions as the project evolves.
+## Example Usage
+- Call any method in `Tools` via OpenWebUI or Python.
+- Example: `Tools().list_cluster_vms_and_containers_grouped()`
 
 ---
 *Update this file whenever major architectural or workflow changes occur.*

@@ -3,10 +3,10 @@ title: TimeWeaver - Timezone & Date/Time Tool
 author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff
-funding_url: https://github.com/open-webui
-version: 1.1.0
+funding_url: https://github.com/sponsors/PureGrain
+version: 1.0.5
 license: MIT
-required_open_webui_version: 0.3.9
+required_open_webui_version: 0.6.34
 description: Weaves timezone rules, DST transitions, and temporal calculations into a seamless fabric of accurate date and time information for any location worldwide.
 """
 

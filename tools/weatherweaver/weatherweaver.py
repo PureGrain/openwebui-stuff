@@ -3,10 +3,10 @@ title: WeatherWeaver - Enhanced Weather Tool
 author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff
-funding_url: https://github.com/open-webui
+funding_url: https://github.com/sponsors/PureGrain
 version: 1.0.4
 license: MIT
-required_open_webui_version: 0.3.9
+required_open_webui_version: 0.6.34
 description: Enhanced weather tool with comprehensive data from Open-Meteo (free, no API key required).
 
 # Credit for original code and idea:
