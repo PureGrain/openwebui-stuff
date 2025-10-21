@@ -2,7 +2,7 @@
 title: ProxmoxWeaver - Comprehensive Proxmox Management Tool
 author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
-repo_url: https://github.com/PureGrain/my-openwebui/tree/main/tools/proxmoxweaver
+repo_url: https://github.com/PureGrain/openwebui-stuff/tree/main/tools/proxmoxweaver
 funding_url: https://github.com/sponsors/PureGrain
 version: 2.0.2
 license: MIT
