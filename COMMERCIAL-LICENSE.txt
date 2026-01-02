@@ -1,0 +1,17 @@
+COMMERCIAL LICENSE AGREEMENT
+
+This software is licensed under a commercial license for proprietary use. By using this software under the commercial license, you agree to the following terms:
+
+1. **License Grant**:
+   - The licensor grants you a non-exclusive, non-transferable license to use this software for commercial purposes.
+
+2. **Restrictions**:
+   - You may not redistribute, sublicense, or modify the software without prior written consent from the licensor.
+
+3. **Support**:
+   - Commercial support is available under a separate agreement.
+
+4. **Liability**:
+   - The software is provided "as is" without warranty of any kind.
+
+For inquiries about commercial licensing, please contact: [Your Email or Website]
