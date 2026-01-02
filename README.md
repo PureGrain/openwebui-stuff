@@ -1,7 +1,6 @@
 # OpenWebUI Stuff
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/PureGrain?label=Sponsor&logo=GitHub-Sponsors&style=for-the-badge)](https://github.com/sponsors/PureGrain)
-[![Build & Scan](https://github.com/PureGrain/openwebui-stuff/actions/workflows/build-and-scan.yml/badge.svg)](https://github.com/PureGrain/openwebui-stuff/actions/workflows/build-and-scan.yml)
 [![Last Commit](https://img.shields.io/github/last-commit/PureGrain/openwebui-stuff)](https://github.com/PureGrain/openwebui-stuff/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/PureGrain/openwebui-stuff)](https://github.com/PureGrain/openwebui-stuff)
 [![Issues](https://img.shields.io/github/issues/PureGrain/openwebui-stuff)](https://github.com/PureGrain/openwebui-stuff/issues)
