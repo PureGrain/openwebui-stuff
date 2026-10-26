@@ -4,7 +4,7 @@ author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff/tree/main/tools/weatherweaver
 funding_url: https://github.com/sponsors/PureGrain
-version: 2.0.1
+version: 2.0.2
 license: MIT
 required_open_webui_version: 0.10.0
 description: Weather done right, worldwide and free. Current conditions, hour by hour and 16-day forecasts, US severe weather alerts, air quality and pollen, past weather back to 1940, side-by-side city comparison, and a weather dashboard in the chat. Data from Open-Meteo and the US National Weather Service. No API keys, no extra packages.
@@ -216,6 +216,49 @@ def _parse_past_date(text: str, today: date) -> date:
     raise WeaverError(
         f"Could not understand the date '{text}'.",
         "Use a date like 2025-07-04, 7/4/2025, July 4 2025, yesterday, or 10 days ago.",
+    )
+
+
+WEEKDAYS = {"monday": 0, "mon": 0, "tuesday": 1, "tue": 1, "tues": 1, "wednesday": 2, "wed": 2, "thursday": 3,
+            "thu": 3, "thurs": 3, "friday": 4, "fri": 4, "saturday": 5, "sat": 5, "sunday": 6, "sun": 6}
+
+
+def _parse_future_date(text: str, today: date) -> date:
+    """Dates for forecasts: today, tomorrow, weekdays, 'in 5 days', ISO, US style and month names."""
+    t = re.sub(r"(\d)(st|nd|rd|th)\b", r"\1", str(text or "").strip().lower().rstrip("."))
+    t = re.sub(r"^(on|this|next|coming)\s+", "", t)
+    if t in ("", "today", "tonight", "now"):
+        return today
+    if t in ("tomorrow", "tomorrow night"):
+        return today + timedelta(days=1)
+    if t in ("yesterday", "last night"):
+        return today - timedelta(days=1)
+    m = re.fullmatch(r"in\s+(\d+)\s+(day|week)s?", t)
+    if m:
+        return today + timedelta(days=int(m.group(1)) * (7 if m.group(2) == "week" else 1))
+    first = t.split()[0] if t else ""
+    if first in WEEKDAYS:
+        return today + timedelta(days=(WEEKDAYS[first] - today.weekday()) % 7 or 7)
+    m = re.fullmatch(r"(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})", t)
+    if m:
+        return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    m = re.fullmatch(r"(\d{1,2})[/.-](\d{1,2})(?:[/.-](\d{2,4}))?", t)
+    if m:
+        year = int(m.group(3)) if m.group(3) else today.year
+        year = year + 2000 if year < 100 else year
+        candidate = date(year, int(m.group(1)), int(m.group(2)))
+        return candidate if m.group(3) or candidate >= today else candidate.replace(year=year + 1)
+    m = re.fullmatch(r"(?:\w+,?\s+)?([a-z]+)\.?\s+(\d{1,2}),?(?:\s+(\d{4}))?", t) or re.fullmatch(r"(\d{1,2})\s+([a-z]+)\.?,?(?:\s+(\d{4}))?", t)
+    if m:
+        a, b = m.group(1), m.group(2)
+        month_word, day_num = (a, b) if a in MONTHS else (b, a)
+        if month_word in MONTHS:
+            year = int(m.group(3)) if m.group(3) else today.year
+            candidate = date(year, MONTHS[month_word], int(day_num))
+            return candidate if m.group(3) or candidate >= today else candidate.replace(year=year + 1)
+    raise WeaverError(
+        f"Could not understand the date '{text}'.",
+        "Use a date like 2026-11-24, 11/24, Nov 24, friday, tomorrow, or in 5 days.",
     )
 
 
@@ -462,18 +505,59 @@ class Tools:
             return None
 
     async def get_weather_forecast(
-        self, location: str = "", days: int = 7, __user__: Optional[dict] = None, __event_emitter__: Emitter = None
+        self,
+        location: str = "",
+        days: int = 7,
+        date_text: str = "",
+        __user__: Optional[dict] = None,
+        __event_emitter__: Emitter = None,
     ) -> dict:
         """
-        Daily forecast for up to 16 days: conditions, high and low, chance and amount of rain or snow, wind, UV, sunrise and sunset, plus the warmest and wettest days.
+        Daily forecast up to 16 days ahead: conditions, high and low, chance and amount of rain or snow, wind, UV, sunrise and sunset, plus the warmest and wettest days. Can also forecast one specific date, and says clearly when a date is too far ahead to forecast.
         :param location: City or postal code. Leave empty for the user's default location.
         :param days: Number of days, 1 to 16.
+        :param date_text: One specific date to forecast instead, for example "Nov 24", "friday", "2026-11-24". Leave empty for the next days.
         """
 
         async def work(client: httpx.AsyncClient) -> dict:
             units = self._units(__user__)
             place = await self._geocode(client, location, __user__)
-            count = max(1, min(16, int(days or 7)))
+            zone = ZoneInfo(place["timezone"]) if place["timezone"] != "auto" else None
+            today = datetime.now(zone).date() if zone else date.today()
+            last_day = today + timedelta(days=15)
+            target = _parse_future_date(date_text, today) if date_text.strip() else None
+            if target and target < today:
+                raise WeaverError("That date has already passed.", "Use get_past_weather for past dates.")
+            if target and target > last_day:
+                away = (target - today).days
+                out = {
+                    "place": place["label"],
+                    "requested_date": target.strftime("%A, %B %-d, %Y"),
+                    "forecast_available": False,
+                    "reason": f"Forecasts only reach 16 days ahead (through {last_day.strftime('%b %-d')}). {target.strftime('%b %-d')} is {away} days away, so no forecast exists yet.",
+                }
+                try:
+                    year_ago = target.replace(year=target.year - 1)
+                    past = await self._forecast(
+                        client, place, units, _url=ARCHIVE_URL,
+                        daily="weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum",
+                        start_date=year_ago.isoformat(), end_date=year_ago.isoformat(),
+                    )
+                    d = past.get("daily") or {}
+                    if self._value(d, "temperature_2m_max", 0) is not None:
+                        out["same_date_last_year"] = {
+                            "date": year_ago.strftime("%b %-d, %Y"),
+                            "conditions": _describe(self._value(d, "weather_code", 0)),
+                            "high": self._num(self._value(d, "temperature_2m_max", 0), units["temp"]),
+                            "low": self._num(self._value(d, "temperature_2m_min", 0), units["temp"]),
+                            "precipitation": f"{round(self._value(d, 'precipitation_sum', 0) or 0, 2)} {units['precip']}",
+                            "note": "Last year's weather on that date, as a rough guide only.",
+                        }
+                except Exception:
+                    pass
+                out["try_again"] = f"Ask again after {(target - timedelta(days=15)).strftime('%b %-d')} for a real forecast."
+                return out
+            count = (target - today).days + 1 if target else max(1, min(16, int(days or 7)))
             data = await self._forecast(
                 client, place, units,
                 daily="weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,uv_index_max,sunrise,sunset",
@@ -513,7 +597,17 @@ class Tools:
                 summary["wettest"] = f"{out_days[max(wet)[1]]['day']} ({max(wet)[0]}% chance)"
             else:
                 summary["wettest"] = "No day above a 30% chance of precipitation."
-            return {"place": place["label"], "days": out_days, "summary": summary}
+            if target:
+                day = out_days[-1] if out_days else "No forecast returned for that date."
+                return {"place": place["label"], "requested_date": target.strftime("%A, %B %-d, %Y"), "forecast": day}
+            covers = f"{out_days[0]['day']} to {out_days[-1]['day']}" if out_days else None
+            return {
+                "place": place["label"],
+                "covers": covers,
+                "max_range": f"Forecasts reach 16 days ahead, through {last_day.strftime('%b %-d')}.",
+                "days": out_days,
+                "summary": summary,
+            }
 
         return await self._run(__event_emitter__, "Getting the forecast", work)
 

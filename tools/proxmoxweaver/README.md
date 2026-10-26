@@ -18,7 +18,7 @@
 
 ProxmoxWeaver lets a model in Open WebUI answer questions about your Proxmox VE cluster: what is running, where it lives, what IP it has, whether backups are current, what failed overnight, and whether anything needs attention. With actions turned on, it can also start, stop and snapshot guests, asking you to confirm each one.
 
-**Version:** 3.0.1
+**Version:** 3.0.2
 **Author:** PureGrain at SLA Ops, LLC
 **License:** MIT
 
@@ -168,6 +168,10 @@ For the strongest protection, give the token only the permissions you want the m
 | The model makes up arguments | Use Native function calling and a model with tool support |
 
 ## Changelog
+
+### Version 3.0.2 (2026-10-26)
+
+- Guest names with filler words now match: "budget VM", "the open webui container" and "silas server" find pve-budget, open-webui and pve-docker-silas
 
 ### Version 3.0.1 (2026-10-26)
 

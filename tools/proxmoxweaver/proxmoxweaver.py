@@ -4,7 +4,7 @@ author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff/tree/main/tools/proxmoxweaver
 funding_url: https://github.com/sponsors/PureGrain
-version: 3.0.1
+version: 3.0.2
 license: MIT
 required_open_webui_version: 0.10.0
 description: Proxmox VE monitoring and safe management. Async with no extra packages, keeps working when a node is down, finds guests by name, and reports health, IPs, backups, updates and usage history. Power actions and snapshots are optional and ask for confirmation.
@@ -67,6 +67,12 @@ IGNORED_IFACES = ("lo", "docker", "br-", "veth", "virbr", "cni", "flannel")
 SHARED_STORAGE_TYPES = {"pbs", "nfs", "cifs", "cephfs", "rbd", "glusterfs", "iscsi", "iscsidirect", "zfs"}
 
 SNAPSHOT_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{1,39}$")
+
+# Words people add around a guest name ("the budget VM") that are not part of it.
+GUEST_FILLER_WORDS = {
+    "the", "my", "a", "an", "vm", "vms", "ct", "cts", "lxc", "qemu", "kvm", "container", "containers",
+    "guest", "server", "machine", "virtual", "box", "instance", "one",
+}
 
 
 class ProxmoxError(Exception):
@@ -396,6 +402,15 @@ class Tools:
         if len(exact) == 1:
             return exact[0]
         partial = exact or [g for g in guests if lowered in str(g.get("name", "")).lower()]
+        if not partial:
+            # "budget VM" or "the open webui container": drop filler words, ignore separators, match the rest.
+            words = [w for w in re.split(r"[\s_\-./]+", lowered) if w and w not in GUEST_FILLER_WORDS]
+            if words:
+                squashed = {id(g): re.sub(r"[\s_\-./]+", "", str(g.get("name", "")).lower()) for g in guests}
+                core = "".join(words)
+                partial = [g for g in guests if core in squashed[id(g)]] or [
+                    g for g in guests if all(w in squashed[id(g)] for w in words)
+                ]
         if len(partial) == 1:
             return partial[0]
         if not partial:
