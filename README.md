@@ -16,15 +16,14 @@ Central hub for PureGrain's OpenWebUI tools, models, functions, and prompt asset
 
 ## Finished Tools
 
-- [ProxmoxWeaver](tools/proxmoxweaver/README.md): Cluster-wide Proxmox monitoring and management tool for OpenWebUI. Features include:
-  - VM & Container Visibility: List all VMs/containers (status, resource usage, details)
-  - Node & Cluster Health: Node status, health, load, uptime, version, roles
-  - Storage & Backup: Storage pools, usage, attached devices, recent backups
-  - Task & Event Monitoring: Recent tasks (migrations, backups, snapshots), logs, errors, cluster events
-  - Snapshots & Templates: VM/container snapshots, details, available templates
-  - User & Permission Overview: Users, roles, permissions, API tokens
-  - Network & Console: VM/container network info (IP, MAC, bridge, firewall), active console sessions
-  - Help & Troubleshooting: Command list and tips for common errors
+- [ProxmoxWeaver](tools/proxmoxweaver/README.md) (v3): Proxmox VE monitoring and safe management for OpenWebUI. Async, no extra packages, and keeps working when a node is down. Features include:
+  - Cluster Overview and Health Report: nodes, quorum, storage, failing disks, failed tasks, pending updates and missing backups, flagged in one call
+  - Guests by Name: list, details and live IP addresses for VMs and containers, no node or VMID needed
+  - Backups: scheduled jobs, guests in no job, newest backup per guest with its age
+  - Nodes and History: CPU, load, kernel, updates, SMART health, and average and peak usage over time
+  - Tasks, Snapshots and Access: recent tasks with results, snapshots, users, tokens and firewall state
+  - Visual Dashboard: node cards and a guest table drawn in the chat
+  - Optional Actions: start, shutdown, reboot, stop and snapshot, off by default and confirmed in the chat
 - [TimeWeaver](tools/timeweaver/README.md): Timezone-aware date/time tool with DST intelligence and easy import via JSON
 - [WeatherWeaver](tools/weatherweaver/README.md): Enhanced weather tool with comprehensive data from Open-Meteo (free, no API key required)
 
