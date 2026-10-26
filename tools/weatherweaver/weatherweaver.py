@@ -4,7 +4,7 @@ author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff/tree/main/tools/weatherweaver
 funding_url: https://github.com/sponsors/PureGrain
-version: 2.0.0
+version: 2.0.1
 license: MIT
 required_open_webui_version: 0.10.0
 description: Weather done right, worldwide and free. Current conditions, hour by hour and 16-day forecasts, US severe weather alerts, air quality and pollen, past weather back to 1940, side-by-side city comparison, and a weather dashboard in the chat. Data from Open-Meteo and the US National Weather Service. No API keys, no extra packages.
@@ -850,7 +850,8 @@ function reportHeight() {{ parent.postMessage({{ type: 'iframe:height', height: 
 window.addEventListener('load', reportHeight); new ResizeObserver(reportHeight).observe(document.body);
 </script></body></html>"""
             context = {
-                "shown": f"A weather dashboard for {place['label']} is visible to the user.",
+                "shown": f"The weather dashboard for {place['label']} (current conditions, next 12 hours, 7 days) is already on the user's screen.",
+                "instructions": "Do not repeat this data, and never print it as JSON, code or tags. In one or two plain sentences, mention anything notable such as alerts or rain, then offer more detail.",
                 "now": f"{condition}, {self._num(c.get('temperature_2m'), t)}, feels like {self._num(c.get('apparent_temperature'), t)}",
                 "today": f"high {self._num(self._value(d, 'temperature_2m_max', 0), t)}, low {self._num(self._value(d, 'temperature_2m_min', 0), t)}",
                 "alerts": [a["event"] for a in alerts] if alerts else "none",

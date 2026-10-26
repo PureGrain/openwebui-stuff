@@ -4,7 +4,7 @@ author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff/tree/main/tools/proxmoxweaver
 funding_url: https://github.com/sponsors/PureGrain
-version: 3.0.0
+version: 3.0.1
 license: MIT
 required_open_webui_version: 0.10.0
 description: Proxmox VE monitoring and safe management. Async with no extra packages, keeps working when a node is down, finds guests by name, and reports health, IPs, backups, updates and usage history. Power actions and snapshots are optional and ask for confirmation.
@@ -1488,7 +1488,8 @@ function reportHeight() {{ parent.postMessage({{ type: 'iframe:height', height: 
 window.addEventListener('load', reportHeight); new ResizeObserver(reportHeight).observe(document.body);
 </script></body></html>"""
             context = {
-                "shown": "Cluster dashboard with node cards, warnings and a guest table is visible to the user.",
+                "shown": "The cluster dashboard (node cards, warnings, guest table) is already on the user's screen.",
+                "instructions": "Do not repeat this data, and never print it as JSON, code or tags. In one or two plain sentences, point out anything that needs attention from the warnings, then offer to dig deeper.",
                 "nodes_online": f"{sum(1 for n in nodes if n.get('status') == 'online')} of {len(nodes)}",
                 "guests_running": f"{running} of {len(guests)}",
                 "warnings": warnings or ["none"],

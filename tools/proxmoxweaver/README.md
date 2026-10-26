@@ -18,7 +18,7 @@
 
 ProxmoxWeaver lets a model in Open WebUI answer questions about your Proxmox VE cluster: what is running, where it lives, what IP it has, whether backups are current, what failed overnight, and whether anything needs attention. With actions turned on, it can also start, stop and snapshot guests, asking you to confirm each one.
 
-**Version:** 3.0.0
+**Version:** 3.0.1
 **Author:** PureGrain at SLA Ops, LLC
 **License:** MIT
 
@@ -168,6 +168,10 @@ For the strongest protection, give the token only the permissions you want the m
 | The model makes up arguments | Use Native function calling and a model with tool support |
 
 ## Changelog
+
+### Version 3.0.1 (2026-10-26)
+
+- The dashboard's summary for the model now tells it the dashboard is already on screen, so small models stop printing the raw data as JSON or tags
 
 ### Version 3.0.0 (2026-10-26)
 

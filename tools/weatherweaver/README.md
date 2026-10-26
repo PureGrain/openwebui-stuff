@@ -2,7 +2,7 @@
 
 Current conditions, hour by hour and 16-day forecasts, US severe weather alerts, air quality and pollen, past weather back to 1940, side-by-side city comparison, and a weather dashboard in the chat. Worldwide, free, no API keys, no extra packages.
 
-**Version:** 2.0.0
+**Version:** 2.0.1
 **Author:** PureGrain at SLA Ops, LLC
 **License:** MIT
 **Credit:** original idea from **Keyless Weather** by spyci
@@ -76,6 +76,10 @@ Requires Open WebUI 0.10.0 or newer and outbound internet access to `open-meteo.
 - Place lookup: Open-Meteo geocoding
 
 ## Changelog
+
+### Version 2.0.1 (2026-10-26)
+
+- The weather dashboard's summary for the model now tells it the dashboard is already on screen, so small models stop printing the raw data as JSON or tags
 
 ### Version 2.0.0 (2026-10-26)
 

@@ -2,7 +2,7 @@
 
 Current time anywhere by city, zone or abbreviation, time zone conversion, date math, countdowns, public holidays for 100+ countries, sunrise, sunset, twilight and moon phase, and a live world clock in the chat. No API keys, no extra packages.
 
-**Version:** 2.0.0
+**Version:** 2.0.1
 **Author:** PureGrain at SLA Ops, LLC
 **License:** MIT
 
@@ -76,6 +76,10 @@ Requires Open WebUI 0.10.0 or newer. Network access is used only for city lookup
 - Abbreviations are ambiguous worldwide (IST is read as India, CST as US Central); the answer always says how it read them.
 
 ## Changelog
+
+### Version 2.0.1 (2026-10-26)
+
+- The world clock's summary for the model now tells it the clock is already on screen, so small models stop printing the raw data as JSON or tags
 
 ### Version 2.0.0 (2026-10-26)
 

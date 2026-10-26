@@ -4,7 +4,7 @@ author: PureGrain at SLA Ops, LLC
 author_url: https://github.com/PureGrain
 repo_url: https://github.com/PureGrain/openwebui-stuff/tree/main/tools/timeweaver
 funding_url: https://github.com/sponsors/PureGrain
-version: 2.0.0
+version: 2.0.1
 license: MIT
 required_open_webui_version: 0.10.0
 description: Time, dates and time zones done right. Current time anywhere by city, zone or abbreviation, time zone conversion, date math, countdowns, public holidays for 100+ countries, sunrise, sunset, twilight and moon phase, plus a live world clock in the chat. No API keys, no extra packages.
@@ -947,7 +947,8 @@ window.addEventListener('load', reportHeight); new ResizeObserver(reportHeight).
 </script></body></html>"""
             now_utc = datetime.now(timezone.utc)
             context = {
-                "shown": "A live world clock is visible to the user.",
+                "shown": "A live, ticking world clock is already on the user's screen.",
+                "instructions": "Do not repeat this data, and never print it as JSON, code or tags. Reply in one short plain sentence.",
                 "clocks": [f"{html.escape(c['label'])}: {self._fmt_time(now_utc.astimezone(ZoneInfo(c['tz'])))}" for c in clocks],
             }
             return HTMLResponse(content=page, headers={"Content-Disposition": "inline"}), context
