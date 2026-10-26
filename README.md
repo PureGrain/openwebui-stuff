@@ -16,6 +16,7 @@ Central hub for PureGrain's OpenWebUI tools, models, functions, and prompt asset
 
 ## Finished Tools
 
+- [NewsWeaver](tools/newsweaver/README.md) (v1): Real headlines, not homepages. Top, U.S., world, business, tech, science, health, sports and local news from Google News and outlet RSS feeds, news search on any subject, and the Hacker News front page, in short lists sized for small models (no API key, SearXNG news as an optional fallback)
 - [ProxmoxWeaver](tools/proxmoxweaver/README.md) (v3): Proxmox VE monitoring and safe management for OpenWebUI. Async, no extra packages, and keeps working when a node is down. Features include:
   - Cluster Overview and Health Report: nodes, quorum, storage, failing disks, failed tasks, pending updates and missing backups, flagged in one call
   - Guests by Name: list, details and live IP addresses for VMs and containers, no node or VMID needed
