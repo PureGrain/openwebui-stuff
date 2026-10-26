@@ -9,10 +9,10 @@ Central hub for PureGrain's OpenWebUI tools, models, functions, and prompt asset
 
 ## Structure
 
-- `functions/` — Utility or core logic modules
-- `models/` — ML models or data abstractions
-- `prompts/` — Prompt templates and engineering assets
-- `tools/` — Specialized tools for OpenWebUI
+- `functions/`: Utility or core logic modules
+- `models/`: ML models or data abstractions
+- `prompts/`: Prompt templates and engineering assets
+- `tools/`: Specialized tools for OpenWebUI
 
 ## Finished Tools
 
@@ -24,8 +24,8 @@ Central hub for PureGrain's OpenWebUI tools, models, functions, and prompt asset
   - Tasks, Snapshots and Access: recent tasks with results, snapshots, users, tokens and firewall state
   - Visual Dashboard: node cards and a guest table drawn in the chat
   - Optional Actions: start, shutdown, reboot, stop and snapshot, off by default and confirmed in the chat
-- [TimeWeaver](tools/timeweaver/README.md): Timezone-aware date/time tool with DST intelligence and easy import via JSON
-- [WeatherWeaver](tools/weatherweaver/README.md): Enhanced weather tool with comprehensive data from Open-Meteo (free, no API key required)
+- [TimeWeaver](tools/timeweaver/README.md) (v2): Time anywhere by city, zone or abbreviation, time zone conversion, date math, countdowns, public holidays for 100+ countries, sunrise, sunset and moon phase, and a live world clock in the chat
+- [WeatherWeaver](tools/weatherweaver/README.md) (v2): Current, hourly and 16-day weather, US severe weather alerts, air quality and pollen, past weather back to 1940, city comparison, and a weather dashboard in the chat (Open-Meteo and NWS, no API key)
 
 ## How to Use
 
